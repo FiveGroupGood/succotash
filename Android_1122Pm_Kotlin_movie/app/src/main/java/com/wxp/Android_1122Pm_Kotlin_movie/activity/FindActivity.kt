@@ -1,5 +1,6 @@
 package com.wxp.Android_1122Pm_Kotlin_movie.activity
 
+
 import android.content.Intent
 import android.os.Parcelable
 import android.support.v4.widget.SwipeRefreshLayout
@@ -7,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Toast
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import com.tt.lvruheng.eyepetizer.mvp.model.bean.HotBean
 import com.wxp.Android_1122Pm_Kotlin_movie.R
 import com.wxp.Android_1122Pm_Kotlin_movie.adapter.FindMoreadapter
@@ -46,7 +49,27 @@ class FindActivity : BaseActivity<Findmoredata, Findmorepresenter>(),Findmoredat
         adapterr?.notifyDataSetChanged()
 
     }
+import com.wxp.Android_1122Pm_Kotlin_movie.presenter.Findmorepresenter
+import com.wxp.Android_1122Pm_Kotlin_movie.view.Findmoredata
+import kotlinx.android.synthetic.main.activity_find.*
 
+class FindActivity : BaseActivity<Findmoredata, Findmorepresenter>(),Findmoredata {
+
+    var adapterr: FindMoreadapter?=null
+
+    override fun findmore(hotBean: HotBean) {
+
+
+        Log.e("XX",hotBean.count.toString())
+
+        adapterr=FindMoreadapter(this,hotBean)
+
+        recyclerView.layoutManager= LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+
+        recyclerView.adapter
+
+
+    }
     lateinit var name: String
     override val layoutResId: Int
         get() = R.layout.activity_find
@@ -112,6 +135,8 @@ class FindActivity : BaseActivity<Findmoredata, Findmorepresenter>(),Findmoredat
                 Toast.makeText(this@FindActivity, "长按", Toast.LENGTH_SHORT).show()
             }
         })
+        setToolbar()
+        getPresenter()?.finddata(this,"时尚","date");
     }
     private fun setToolbar() {
         setSupportActionBar(toolbar)
